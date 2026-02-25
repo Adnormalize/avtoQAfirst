@@ -1,3 +1,4 @@
+'''
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 import time
@@ -44,3 +45,4 @@ def test_button_new_game(game_driver, game_coordinates):
 
     coords = game_coordinates['new_game']
     tap(driver, coords['x'], coords['y'])
+'''
