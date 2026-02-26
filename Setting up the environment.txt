@@ -1,0 +1,8 @@
+Установить Git
+Установить NodeJS
+Установить Java Development Kit (JDK)
+Установить Android SDK (Android Studio)
+Установить Appium
+Установить вебдрайвер appium driver install uiautomator2
+Установить клиент pip install Appium-Python-Client
+Создать виртуальное окружение venv и установить туда все из файла requirements.txt
