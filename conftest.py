@@ -15,7 +15,7 @@ APPIUM_URL = f"http://{APPIUM_HOST}:{APPIUM_PORT}"
 STATUS_URL = f"{APPIUM_URL}/status"
 
 #Параметр управления логами
-APPIUM_LOG_MODE = os.getenv("APPIUM_LOG_MODE", "off")
+APPIUM_LOG_MODE = os.getenv("APPIUM_LOG_MODE", "error")
 # off | error | file | console
 
 def wait_for_appium(max_wait_seconds: int = 30) -> None:
