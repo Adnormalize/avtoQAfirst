@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="description" content="Доктор для котёнка — детская игра: лечим чёрного котёнка" />
+  <meta name="theme-color" content="#7ec8c8" />
+  <title>Доктор для котёнка</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="top-bar" aria-hidden="true">
+      <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress__fill" id="progressFill"></div>
+      </div>
+    </header>
+
+    <!-- СТАРТ -->
+    <section id="screen-start" class="screen screen--active" data-screen="start">
+      <div class="hero-sky" aria-hidden="true"></div>
+      <div class="brand-block">
+        <p class="brand">Доктор для котёнка</p>
+        <h1 class="headline">Помоги чёрному котёнку выздороветь!</h1>
+        <p class="lead">Нажимай на большие кнопки и лечи друга шаг за шагом.</p>
+      </div>
+      <div class="kitten-stage" aria-hidden="true">
+        <div class="kitten kitten--sad" id="kittenStart">
+          <svg class="kitten-svg" viewBox="0 0 200 180" role="img" aria-label="Грустный чёрный котёнок">
+            <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+            <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+            <circle class="k-head" cx="100" cy="62" r="40" />
+            <polygon class="k-ear" points="68,40 62,12 88,32" />
+            <polygon class="k-ear" points="132,40 138,12 112,32" />
+            <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+            <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+            <ellipse class="k-eye k-eye--sad" cx="84" cy="60" rx="7" ry="9" />
+            <ellipse class="k-eye k-eye--sad" cx="116" cy="60" rx="7" ry="9" />
+            <path class="k-mouth k-mouth--sad" d="M90 78 Q100 72 110 78" />
+            <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+            <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+            <ellipse class="k-paw k-paw--hurt" cx="128" cy="145" rx="14" ry="12" />
+            <path class="k-tail" d="M52 120 Q20 100 28 70" />
+          </svg>
+          <span class="hurt-mark" title="Болит лапка">!</span>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button type="button" class="btn btn--primary btn--xl" id="btnStart" data-action="start">
+          Начать лечение
+        </button>
+      </div>
+    </section>
+
+    <!-- ОСМОТР -->
+    <section id="screen-exam" class="screen" data-screen="exam" hidden>
+      <p class="step-label">Шаг 1 · Осмотр</p>
+      <h2 class="screen-title">Найди, что болит</h2>
+      <p class="screen-hint">Нажми на больную лапку котёнка</p>
+      <div class="kitten-stage kitten-stage--interactive">
+        <div class="kitten kitten--sad" id="kittenExam">
+          <svg class="kitten-svg" viewBox="0 0 200 180" role="img" aria-label="Котёнок на осмотре">
+            <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+            <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+            <circle class="k-head" cx="100" cy="62" r="40" />
+            <polygon class="k-ear" points="68,40 62,12 88,32" />
+            <polygon class="k-ear" points="132,40 138,12 112,32" />
+            <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+            <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+            <ellipse class="k-eye k-eye--sad" cx="84" cy="60" rx="7" ry="9" />
+            <ellipse class="k-eye k-eye--sad" cx="116" cy="60" rx="7" ry="9" />
+            <path class="k-mouth k-mouth--sad" d="M90 78 Q100 72 110 78" />
+            <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+            <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+            <ellipse class="k-paw k-paw--hurt" cx="128" cy="145" rx="14" ry="12" />
+            <path class="k-tail" d="M52 120 Q20 100 28 70" />
+          </svg>
+          <button type="button" class="hotspot hotspot--paw" id="hotspotPaw" aria-label="Большая лапка" title="Большая лапка"></button>
+          <button type="button" class="hotspot hotspot--head" id="hotspotHead" aria-label="Голова" title="Голова"></button>
+          <button type="button" class="hotspot hotspot--body" id="hotspotBody" aria-label="Животик" title="Животик"></button>
+        </div>
+      </div>
+      <p class="feedback" id="examFeedback" aria-live="polite"></p>
+    </section>
+
+    <!-- ЛЕЧЕНИЕ: МЫТЬЁ -->
+    <section id="screen-wash" class="screen" data-screen="wash" hidden>
+      <p class="step-label">Шаг 2 · Гигиена</p>
+      <h2 class="screen-title">Помой лапку</h2>
+      <p class="screen-hint">Нажми на мыло, потом на лапку</p>
+      <div class="treat-layout">
+        <div class="tools">
+          <button type="button" class="tool-btn" id="toolSoap" data-tool="soap" aria-pressed="false">
+            <span class="tool-icon tool-icon--soap" aria-hidden="true"></span>
+            <span class="tool-name">Мыло</span>
+          </button>
+        </div>
+        <div class="kitten-stage">
+          <div class="kitten kitten--sad" id="kittenWash">
+            <svg class="kitten-svg" viewBox="0 0 200 180" role="img">
+              <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+              <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+              <circle class="k-head" cx="100" cy="62" r="40" />
+              <polygon class="k-ear" points="68,40 62,12 88,32" />
+              <polygon class="k-ear" points="132,40 138,12 112,32" />
+              <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+              <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+              <ellipse class="k-eye k-eye--sad" cx="84" cy="60" rx="7" ry="9" />
+              <ellipse class="k-eye k-eye--sad" cx="116" cy="60" rx="7" ry="9" />
+              <path class="k-mouth k-mouth--sad" d="M90 78 Q100 72 110 78" />
+              <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+              <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+              <ellipse class="k-paw k-paw--hurt" cx="128" cy="145" rx="14" ry="12" />
+              <path class="k-tail" d="M52 120 Q20 100 28 70" />
+            </svg>
+            <button type="button" class="hotspot hotspot--paw" id="washPaw" aria-label="Помыть лапку"></button>
+            <div class="bubbles" id="bubbles" hidden></div>
+          </div>
+        </div>
+      </div>
+      <p class="feedback" id="washFeedback" aria-live="polite"></p>
+    </section>
+
+    <!-- ЛЕКАРСТВО -->
+    <section id="screen-medicine" class="screen" data-screen="medicine" hidden>
+      <p class="step-label">Шаг 3 · Лекарство</p>
+      <h2 class="screen-title">Дай лекарство</h2>
+      <p class="screen-hint">Нажми на бутылочку, потом на котёнка</p>
+      <div class="treat-layout">
+        <div class="tools">
+          <button type="button" class="tool-btn" id="toolMed" data-tool="medicine" aria-pressed="false">
+            <span class="tool-icon tool-icon--med" aria-hidden="true"></span>
+            <span class="tool-name">Лекарство</span>
+          </button>
+        </div>
+        <div class="kitten-stage">
+          <div class="kitten kitten--neutral" id="kittenMed">
+            <svg class="kitten-svg" viewBox="0 0 200 180" role="img">
+              <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+              <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+              <circle class="k-head" cx="100" cy="62" r="40" />
+              <polygon class="k-ear" points="68,40 62,12 88,32" />
+              <polygon class="k-ear" points="132,40 138,12 112,32" />
+              <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+              <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+              <ellipse class="k-eye" cx="84" cy="60" rx="7" ry="10" />
+              <ellipse class="k-eye" cx="116" cy="60" rx="7" ry="10" />
+              <path class="k-mouth" d="M92 78 Q100 84 108 78" />
+              <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+              <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+              <ellipse class="k-paw k-paw--clean" cx="128" cy="145" rx="14" ry="12" />
+              <path class="k-tail" d="M52 120 Q20 100 28 70" />
+            </svg>
+            <button type="button" class="hotspot hotspot--mouth" id="giveMed" aria-label="Дать лекарство"></button>
+          </div>
+        </div>
+      </div>
+      <p class="feedback" id="medFeedback" aria-live="polite"></p>
+    </section>
+
+    <!-- ПЛАСТЫРЬ -->
+    <section id="screen-bandage" class="screen" data-screen="bandage" hidden>
+      <p class="step-label">Шаг 4 · Пластырь</p>
+      <h2 class="screen-title">Наложи пластырь</h2>
+      <p class="screen-hint">Нажми на пластырь, потом на лапку</p>
+      <div class="treat-layout">
+        <div class="tools">
+          <button type="button" class="tool-btn" id="toolBandage" data-tool="bandage" aria-pressed="false">
+            <span class="tool-icon tool-icon--bandage" aria-hidden="true"></span>
+            <span class="tool-name">Пластырь</span>
+          </button>
+        </div>
+        <div class="kitten-stage">
+          <div class="kitten kitten--neutral" id="kittenBandage">
+            <svg class="kitten-svg" viewBox="0 0 200 180" role="img">
+              <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+              <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+              <circle class="k-head" cx="100" cy="62" r="40" />
+              <polygon class="k-ear" points="68,40 62,12 88,32" />
+              <polygon class="k-ear" points="132,40 138,12 112,32" />
+              <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+              <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+              <ellipse class="k-eye" cx="84" cy="60" rx="7" ry="10" />
+              <ellipse class="k-eye" cx="116" cy="60" rx="7" ry="10" />
+              <path class="k-mouth" d="M92 78 Q100 84 108 78" />
+              <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+              <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+              <ellipse class="k-paw k-paw--clean" cx="128" cy="145" rx="14" ry="12" />
+              <path class="k-tail" d="M52 120 Q20 100 28 70" />
+            </svg>
+            <button type="button" class="hotspot hotspot--paw" id="applyBandage" aria-label="Наложить пластырь"></button>
+            <div class="bandage-patch" id="bandagePatch" hidden aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+      <p class="feedback" id="bandageFeedback" aria-live="polite"></p>
+    </section>
+
+    <!-- КОРМЛЕНИЕ -->
+    <section id="screen-feed" class="screen" data-screen="feed" hidden>
+      <p class="step-label">Шаг 5 · Угощение</p>
+      <h2 class="screen-title">Покорми котёнка</h2>
+      <p class="screen-hint">Нажми на миску с едой</p>
+      <div class="treat-layout treat-layout--center">
+        <div class="kitten-stage">
+          <div class="kitten kitten--hopeful" id="kittenFeed">
+            <svg class="kitten-svg" viewBox="0 0 200 180" role="img">
+              <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+              <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+              <circle class="k-head" cx="100" cy="62" r="40" />
+              <polygon class="k-ear" points="68,40 62,12 88,32" />
+              <polygon class="k-ear" points="132,40 138,12 112,32" />
+              <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+              <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+              <ellipse class="k-eye" cx="84" cy="60" rx="7" ry="10" />
+              <ellipse class="k-eye" cx="116" cy="60" rx="7" ry="10" />
+              <path class="k-mouth" d="M92 78 Q100 86 108 78" />
+              <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+              <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+              <ellipse class="k-paw" cx="128" cy="145" rx="14" ry="12" />
+              <rect class="k-bandage-on" x="116" y="138" width="24" height="14" rx="3" />
+              <path class="k-tail" d="M52 120 Q20 100 28 70" />
+            </svg>
+          </div>
+        </div>
+        <button type="button" class="bowl-btn" id="btnBowl" aria-label="Миска с едой">
+          <span class="bowl" aria-hidden="true">
+            <span class="bowl__food"></span>
+          </span>
+          <span class="bowl-label">Миска</span>
+        </button>
+      </div>
+      <p class="feedback" id="feedFeedback" aria-live="polite"></p>
+    </section>
+
+    <!-- ПОБЕДА -->
+    <section id="screen-win" class="screen" data-screen="win" hidden>
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+      <p class="brand brand--win">Доктор для котёнка</p>
+      <h2 class="screen-title screen-title--win">Котёнок здоров и рад!</h2>
+      <p class="screen-hint">Ты отличный доктор. Котёнок мурлычет от счастья.</p>
+      <div class="kitten-stage">
+        <div class="kitten kitten--happy" id="kittenWin">
+          <svg class="kitten-svg" viewBox="0 0 200 180" role="img" aria-label="Счастливый котёнок">
+            <ellipse class="k-shadow" cx="100" cy="168" rx="48" ry="8" />
+            <ellipse class="k-body" cx="100" cy="118" rx="52" ry="42" />
+            <circle class="k-head" cx="100" cy="62" r="40" />
+            <polygon class="k-ear" points="68,40 62,12 88,32" />
+            <polygon class="k-ear" points="132,40 138,12 112,32" />
+            <polygon class="k-ear-in" points="72,36 68,18 86,32" />
+            <polygon class="k-ear-in" points="128,36 132,18 114,32" />
+            <path class="k-eye-happy" d="M76 62 Q84 52 92 62" />
+            <path class="k-eye-happy" d="M108 62 Q116 52 124 62" />
+            <path class="k-mouth k-mouth--happy" d="M88 76 Q100 92 112 76" />
+            <ellipse class="k-nose" cx="100" cy="70" rx="5" ry="3.5" />
+            <ellipse class="k-cheek" cx="72" cy="72" rx="8" ry="5" />
+            <ellipse class="k-cheek" cx="128" cy="72" rx="8" ry="5" />
+            <ellipse class="k-paw" cx="72" cy="145" rx="14" ry="12" />
+            <ellipse class="k-paw" cx="128" cy="145" rx="14" ry="12" />
+            <rect class="k-bandage-on" x="116" y="138" width="24" height="14" rx="3" />
+            <path class="k-tail k-tail--wag" d="M52 120 Q20 90 40 55" />
+            <text class="k-heart" x="150" y="40">♥</text>
+            <text class="k-heart k-heart--2" x="40" y="50">♥</text>
+          </svg>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button type="button" class="btn btn--primary btn--xl" id="btnReplay" data-action="replay">
+          Лечить снова
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Опциональная заглушка Яндекс Игр (без рекламы) -->
+  <script src="js/yandex-sdk-stub.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
